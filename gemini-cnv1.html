@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De la Violencia al Pensamiento Pacífico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #3366CC;
+        }
+        .step-number {
+            background-color: #3366CC;
+            color: white;
+            border-radius: 9999px;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#3366CC] mb-2">De la Violencia al Pensamiento Pacífico</h1>
+            <p class="text-lg md:text-xl text-gray-600">Una guía visual para transformar nuestras respuestas emocionales.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="sentimientos" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">1. El Despertar de los Sentimientos</h2>
+                <p class="text-center text-gray-600 mb-8">Ciertas emociones son alarmas. Nos avisan que nuestro pensamiento puede estar generando violencia interna o externa. Son una oportunidad para cambiar.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="bg-blue-100 p-6 rounded-lg">
+                        <span class="text-5xl">😠</span>
+                        <h3 class="text-xl font-bold mt-2 text-blue-800">Ira</h3>
+                    </div>
+                    <div class="bg-yellow-100 p-6 rounded-lg">
+                        <span class="text-5xl">😔</span>
+                        <h3 class="text-xl font-bold mt-2 text-yellow-800">Depresión</h3>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg">
+                        <span class="text-5xl">😳</span>
+                        <h3 class="text-xl font-bold mt-2 text-red-800">Culpa</h3>
+                    </div>
+                    <div class="bg-purple-100 p-6 rounded-lg">
+                        <span class="text-5xl">😣</span>
+                        <h3 class="text-xl font-bold mt-2 text-purple-800">Vergüenza</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ira" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">2. La Ira como Amiga</h2>
+                 <p class="text-center text-gray-600 mb-8">La ira no es el problema, es un mensajero. Nos indica que estamos desconectados de nuestras necesidades fundamentales por estar atrapados en juicios.</p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-center">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-[#DC3912]">IRA</h3>
+                        <p>Sentimiento Intenso</p>
+                    </div>
+                    <div class="flow-arrow transform md:-rotate-0 rotate-90">➔</div>
+                     <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-[#FF9900]">SEÑAL</h3>
+                        <p>Alerta de Pensamiento Crítico</p>
+                    </div>
+                    <div class="flow-arrow transform md:-rotate-0 rotate-90">➔</div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-[#3366CC]">NECESIDAD INSATISFECHA</h3>
+                        <p>Ej: Respeto, desarrollo, seguridad</p>
+                    </div>
+                </div>
+                 <p class="text-center text-gray-600 mt-8">Al entender que la ira es un catalizador, podemos dejar de culpar a otros y empezar a buscar qué necesidad profunda no está siendo atendida en nosotros.</p>
+            </section>
+
+            <section id="conexion" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">3. El Poder de la Conexión</h2>
+                 <p class="text-center text-gray-600 mb-8">Tenemos una elección: alimentar juicios que generan conflicto o conectar con necesidades que generan paz. El resultado depende de nuestro enfoque.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4 text-[#DC3912]">Mente Violenta: Enfoque en Juicios</h3>
+                        <p class="text-center mb-4 text-sm">Esta perspectiva divide el mundo en "buenos" y "malos", generando un estado de conflicto interno constante que drena nuestra paz.</p>
+                        <div class="chart-container">
+                            <canvas id="violentMindChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4 text-[#109618]">Mente Pacífica: Enfoque en Necesidades</h3>
+                         <p class="text-center mb-4 text-sm">Al conectar con nuestras necesidades y las de los demás, la ira se disipa y se transforma en emociones más constructivas como el miedo o la tristeza, que nos mueven a la acción.</p>
+                        <div class="chart-container">
+                            <canvas id="peacefulMindChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ejercicio" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">4. Un Ejercicio para la Transformación</h2>
+                 <p class="text-center text-gray-600 mb-8">Este proceso práctico nos ayuda a movernos del juicio a la compasión a través de la auto-reflexión.</p>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-4">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold">Práctica: El Diario</h3>
+                            <p class="text-gray-600">Anota qué persona o situación estimuló tu ira. Sé específico sobre lo que dijeron o hicieron. Ejemplo: "Mi jefe levantó la voz en la reunión".</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold">Análisis: El Pensamiento y la Necesidad</h3>
+                            <p class="text-gray-600">Reflexiona sobre los pensamientos y juicios que te provocaron la ira. "¿Qué me estoy diciendo a mí mismo sobre esto?". Luego, pregúntate: "¿Qué necesidad mía no fue cubierta en esa situación?".</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3 class="text-xl font-bold">Resultado: Conexión y Compasión</h3>
+                            <p class="text-gray-600">Al identificar la necesidad (ej: necesidad de ser escuchado, de respeto), la energía de la ira se transforma. Ahora puedes actuar desde un lugar de conexión contigo mismo, no de reacción.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="conclusion" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">5. Hacia una Vida más Pacífica</h2>
+                 <p class="text-center text-gray-600 mb-8">La transformación del pensamiento no elimina los desafíos, pero cambia radicalmente nuestra experiencia de vida, aumentando nuestro bienestar y el de quienes nos rodean.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-600">Nivel de Paz Interior</h3>
+                        <p class="text-lg text-gray-500 mb-4">(Conceptual)</p>
+                        <div class="chart-container h-64 md:h-80 max-w-sm">
+                            <canvas id="peaceBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-[#3366CC] text-white p-8 rounded-lg text-center flex flex-col justify-center h-full">
+                        <p class="text-2xl font-bold">Recuerda:</p>
+                        <p class="text-4xl lg:text-5xl font-black my-4">No podemos estar enojados cuando estamos conectados a nuestras necesidades.</p>
+                        <p class="text-lg">La conexión es el antídoto al juicio.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>Infografía generada basada en los principios de la Comunicación No Violenta.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const chartTooltipPlugin = {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) return label;
+            
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const violentMindCtx = document.getElementById('violentMindChart').getContext('2d');
+        new Chart(violentMindCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Paz Interior Perdida', 'Estado de Alerta'],
+                datasets: [{
+                    label: 'Mente Violenta',
+                    data: [75, 25],
+                    backgroundColor: ['#DC3912', '#FF9900'],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: chartTooltipPlugin
+            }
+        });
+
+        const peacefulMindCtx = document.getElementById('peacefulMindChart').getContext('2d');
+        new Chart(peacefulMindCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Paz Interior Cultivada', 'Necesidades Atendidas'],
+                datasets: [{
+                    label: 'Mente Pacífica',
+                    data: [85, 15],
+                    backgroundColor: ['#109618', '#3366CC'],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: chartTooltipPlugin
+            }
+        });
+
+        const peaceBarCtx = document.getElementById('peaceBarChart').getContext('2d');
+        new Chart(peaceBarCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Basado en Juicios', 'Basado en Necesidades'],
+                datasets: [{
+                    label: 'Nivel de Paz Interior',
+                    data: [30, 90],
+                    backgroundColor: ['#DC3912', '#109618'],
+                    borderColor: ['#DC3912', '#109618'],
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    ...chartTooltipPlugin
+                }
+            }
+        });
+    </script>
+</body>
+</html>
