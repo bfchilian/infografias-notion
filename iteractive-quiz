@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: El Caso INAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            width: 100%;
+        }
+        .question-card {
+            margin-bottom: 2rem;
+        }
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .option-button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            text-align: left;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not(.disabled) {
+            background-color: #e5e7eb;
+            transform: scale(1.02);
+        }
+        .option-button.correct {
+            background-color: #d1fae5;
+            border-color: #34d399;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #f87171;
+        }
+        .rationale-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-left: 4px solid;
+            border-radius: 0.5rem;
+            background-color: #e5e7eb;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        .correct .rationale-text {
+            border-color: #34d399;
+        }
+        .incorrect .rationale-text {
+            border-color: #f87171;
+        }
+        .disabled {
+            pointer-events: none;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        #next-button {
+            background-color: #1f2937;
+            color: white;
+        }
+        #next-button:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+        }
+        .final-score {
+            text-align: center;
+        }
+        .final-score h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .final-score p {
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-app" class="quiz-container">
+        <h1 class="text-3xl font-bold text-center mb-6">Quiz: El Caso INAI</h1>
+
+        <div id="question-card" class="question-card">
+            <p id="question-number" class="text-lg font-semibold text-gray-500 mb-2"></p>
+            <p id="question-text" class="question-text"></p>
+            <div id="options-container" class="flex flex-col"></div>
+            <div id="rationale-container"></div>
+            <div class="nav-buttons">
+                <button id="next-button" class="nav-button" disabled>Siguiente</button>
+            </div>
+        </div>
+
+        <div id="final-score-card" class="final-score" style="display: none;">
+            <h2>Quiz Completado</h2>
+            <p>Tu puntuación final es: <span id="final-score-text" class="font-bold"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+          "questions": [
+            {
+              "question": "¿Cuál es el fundamento constitucional del derecho a la información en México?",
+              "hint": "Este artículo se encuentra en la primera parte de la Constitución, que habla sobre las garantías individuales.",
+              "answerOptions": [
+                {
+                  "text": "Artículo 1º constitucional",
+                  "rationale": "El Artículo 1º se refiere a los derechos humanos y la prohibición de la discriminación.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Artículo 27 constitucional",
+                  "rationale": "El Artículo 27 trata sobre la propiedad de tierras y aguas de la Nación.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Artículo 6º constitucional",
+                  "rationale": "El Artículo 6º establece el derecho de toda persona al libre acceso a la información.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Artículo 127 constitucional",
+                  "rationale": "El Artículo 127 se refiere a que ningún funcionario público puede recibir una remuneración mayor a la del Presidente.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál era la principal función del INAI como organismo garante?",
+              "hint": "Piensa en el rol del INAI como un mediador imparcial entre el ciudadano y la autoridad.",
+              "answerOptions": [
+                {
+                  "text": "Asesorar a los partidos políticos",
+                  "rationale": "La función del INAI no era asesorar a los partidos políticos.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Crear las bases de datos públicas",
+                  "rationale": "El INAI no creaba bases de datos, sino que garantizaba el acceso a las que las dependencias ya tenían.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Resolver controversias y supervisar el cumplimiento de la ley de transparencia",
+                  "rationale": "Su función era actuar como un árbitro en casos donde las dependencias negaban o entregaban información incompleta.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Revisar la cuenta pública del gobierno",
+                  "rationale": "La revisión de la cuenta pública es una función de la Auditoría Superior de la Federación (ASF).",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál de los siguientes fue un argumento oficialista para la desaparición del INAI?",
+              "hint": "Considera el concepto de 'austeridad republicana'.",
+              "answerOptions": [
+                {
+                  "text": "El INAI no era un órgano autónomo",
+                  "rationale": "El INAI era constitucionalmente autónomo.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Representaba un costo elevado y era una burocracia innecesaria",
+                  "rationale": "Este fue un argumento central del oficialismo para justificar la reforma.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Recibía muy pocas solicitudes de información",
+                  "rationale": "El INAI recibía más de 300,000 solicitudes al año, por lo que este argumento no es correcto.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Se opuso a la reforma energética",
+                  "rationale": "La oposición del INAI a la reforma energética no fue un argumento para su desaparición.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál fue el costo operativo aproximado por solicitud del INAI en el año 2023?",
+              "hint": "Recuerda que este valor refleja el costo total del organismo, no solo el costo de un trámite individual.",
+              "answerOptions": [
+                {
+                  "text": "$1,000 pesos",
+                  "rationale": "Este valor es demasiado bajo si se considera el presupuesto anual del organismo y el número de solicitudes atendidas.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "$3,174 pesos",
+                  "rationale": "Este valor resulta de la división del presupuesto anual del INAI entre el número de solicitudes recibidas, siendo un costo aproximado del funcionamiento del organismo.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "$5,500 pesos",
+                  "rationale": "Este valor es mucho más alto que el costo operativo real por solicitud del INAI.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "$500 pesos",
+                  "rationale": "Este valor no corresponde a la cifra real del costo operativo por solicitud del INAI.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Según la oposición, ¿cuál es el principal riesgo de que la Secretaría de la Función Pública asuma las funciones del INAI?",
+              "hint": "Considera la diferencia entre un árbitro independiente y un órgano de la misma administración.",
+              "answerOptions": [
+                {
+                  "text": "Que las solicitudes se retrasen por falta de personal",
+                  "rationale": "Aunque es un riesgo, el principal argumento de la oposición es la falta de imparcialidad, más que la velocidad del proceso.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Que actúe como 'juez y parte', generando conflictos de interés",
+                  "rationale": "La oposición argumenta que al ser una misma instancia la que resuelve y la que es objeto de la solicitud, se pierde la imparcialidad.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Que se elimine el derecho a la información",
+                  "rationale": "El derecho a la información sigue estando en la Constitución, por lo que no se elimina, solo cambia el proceso.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Que se pierdan todas las bases de datos de información pública",
+                  "rationale": "No existe evidencia que las bases de datos desaparezcan, solo el organismo que garantizaba su acceso.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál es el fundamento constitucional que prohíbe a los comisionados del INAI ganar más que el Presidente de la República?",
+              "hint": "Este artículo forma parte del Título Octavo de la Constitución, que se refiere a las prevenciones generales.",
+              "answerOptions": [
+                {
+                  "text": "Artículo 6º",
+                  "rationale": "El Artículo 6º se enfoca en el derecho a la información.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Artículo 127",
+                  "rationale": "El Artículo 127 establece el principio de que ningún funcionario puede recibir una remuneración mayor a la del Presidente de la República.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Artículo 27",
+                  "rationale": "El Artículo 27 se relaciona con la propiedad de las tierras y aguas de la Nación.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Artículo 123",
+                  "rationale": "El Artículo 123 trata sobre los derechos laborales de los trabajadores.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Un ciudadano solicita información a una dependencia. Si esta le niega el acceso, ¿cuál es el siguiente paso en el proceso administrativo actual (sin el INAI)?",
+              "hint": "El nuevo proceso administrativo centraliza la resolución de los recursos en el mismo poder ejecutivo.",
+              "answerOptions": [
+                {
+                  "text": "Presentar un recurso de revisión ante el INAI",
+                  "rationale": "El INAI ya no existe para resolver recursos de revisión.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Interponer un amparo de manera directa",
+                  "rationale": "Aunque es una vía, el proceso administrativo actual indica otra instancia antes de llegar al amparo.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Interponer un recurso de revisión ante la Secretaría de la Función Pública",
+                  "rationale": "El recurso de revisión ahora se presenta ante la Secretaría de la Función Pública, que asume estas funciones.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "No hay más pasos, se pierde la información",
+                  "rationale": "El derecho a la información se mantiene, aunque el proceso para reclamarlo ha cambiado.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "De acuerdo con los datos, ¿quiénes eran los principales solicitantes de información ante el INAI?",
+              "hint": "Piensa en el objetivo principal de la ley: empoderar al ciudadano común para que tenga acceso a la información pública.",
+              "answerOptions": [
+                {
+                  "text": "Periodistas y medios de comunicación",
+                  "rationale": "Aunque periodistas y medios hacían solicitudes, no eran la mayoría. Las personas físicas eran el grupo más grande.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Partidos políticos y sus afiliados",
+                  "rationale": "Las solicitudes de partidos políticos representaban una fracción mínima de las solicitudes totales.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Organizaciones de la sociedad civil",
+                  "rationale": "Las organizaciones de la sociedad civil hacían solicitudes, pero su porcentaje era muy bajo comparado con las personas físicas.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Personas físicas (ciudadanos comunes)",
+                  "rationale": "Los datos oficiales del INAI mostraban que las personas físicas eran, con mucho, las principales usuarias de la plataforma.",
+                  "isCorrect": true
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál es la consecuencia directa, según la oposición, de que el nuevo proceso de transparencia se resuelva internamente en las dependencias?",
+              "hint": "Considera el concepto de 'conflicto de interés'.",
+              "answerOptions": [
+                {
+                  "text": "Se agiliza el proceso y se reduce la burocracia",
+                  "rationale": "La oposición considera que, en lugar de agilizarse, el proceso podría volverse más lento y burocrático, además de menos imparcial.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Se garantiza un mejor uso de los recursos",
+                  "rationale": "La oposición argumenta que no hay garantías de que los recursos se usen de manera más eficiente, ya que el conflicto de interés puede llevar a más opacidad.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Se pierde la imparcialidad al ser “juez y parte”",
+                  "rationale": "Este es el principal argumento de la oposición: al no haber un tercero imparcial, la dependencia puede negarse a sí misma la información sin consecuencias.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Se fortalece el poder del Congreso",
+                  "rationale": "La reforma no fortalece el poder del Congreso, sino que lo centraliza en el poder ejecutivo.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál era el presupuesto anual del INAI en 2024?",
+              "hint": "Piensa en las cifras que discutimos sobre el presupuesto y su relación con los argumentos de la austeridad.",
+              "answerOptions": [
+                {
+                  "text": "Más de 2 mil millones de pesos",
+                  "rationale": "El presupuesto del INAI era menor a 2 mil millones de pesos.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Menos de 500 millones de pesos",
+                  "rationale": "El presupuesto del INAI superaba los 500 millones de pesos.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Alrededor de 1 mil millones de pesos",
+                  "rationale": "El presupuesto del INAI en 2024 fue de 993 millones de pesos, una cantidad cercana a 1 mil millones.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Más de 5 mil millones de pesos",
+                  "rationale": "Esta cifra es mucho mayor que el presupuesto del INAI.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const rationaleContainer = document.getElementById('rationale-container');
+        const questionNumberText = document.getElementById('question-number');
+        const finalScoreCard = document.getElementById('final-score-card');
+        const quizCard = document.getElementById('question-card');
+        const finalScoreText = document.getElementById('final-score-text');
+
+        function showQuestion() {
+            if (currentQuestionIndex >= quizData.questions.length) {
+                showFinalScore();
+                return;
+            }
+
+            const currentQuestion = quizData.questions[currentQuestionIndex];
+            questionNumberText.textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizData.questions.length}`;
+            questionText.textContent = currentQuestion.question;
+            optionsContainer.innerHTML = '';
+            rationaleContainer.innerHTML = '';
+            nextButton.disabled = true;
+            answered = false;
+
+            currentQuestion.answerOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option-button');
+                button.textContent = option.text;
+                button.addEventListener('click', () => selectOption(button, option));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(button, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            optionsContainer.querySelectorAll('.option-button').forEach(btn => btn.classList.add('disabled'));
+
+            if (selectedOption.isCorrect) {
+                button.classList.add('correct');
+                score++;
+            } else {
+                button.classList.add('incorrect');
+                const correctOption = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                optionsContainer.querySelectorAll('.option-button').forEach(btn => {
+                    if (btn.textContent === correctOption.text) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            const rationaleDiv = document.createElement('div');
+            rationaleDiv.classList.add('rationale-text');
+            rationaleDiv.textContent = selectedOption.rationale;
+            rationaleContainer.appendChild(rationaleDiv);
+
+            if (selectedOption.isCorrect) {
+                rationaleDiv.classList.add('correct');
+            } else {
+                rationaleDiv.classList.add('incorrect');
+            }
+            
+            nextButton.disabled = false;
+        }
+
+        function showFinalScore() {
+            quizCard.style.display = 'none';
+            finalScoreCard.style.display = 'block';
+            finalScoreText.textContent = `${score} de ${quizData.questions.length}`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            showQuestion();
+        });
+
+        showQuestion();
+    </script>
+</body>
+</html>
